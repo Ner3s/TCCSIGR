@@ -1,0 +1,224 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md">
+            <h1>
+                SIGR
+                <span class="font-weight-light">
+                    (Relátorio)
+                </span>
+            </h1>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-10">
+            <h3 class="font-weight-light">
+                Sistema gerencial para restaurantes
+            </h3>
+        </div>
+        <div class="col-md-1">
+            <a href="/home" class="btn btn-dark"> Voltar</a>
+        </div>
+        <div class="col-md-1">
+            <form>
+                <input type="button" class="btn btn-secondary" value="Imprimir" onClick="window.print()" />
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md">
+            <hr>
+            <div class="btn-group" role="group" aria-label="Basic example">
+                <a class="btn btn-secondary" href="/relatorio?acao=dia">Dia</a>
+                <a class="btn btn-secondary" href="/relatorio?acao=mes">Mês</a>
+                <a class="btn btn-secondary" href="/relatorio?acao=anual">Anual</a>
+            </div>
+        </div>
+    </div>
+    <br><br>
+    <h3 class="font-weight-light">RELATÓRIO GERAL DO SISTEMA</h3>
+    <hr>
+    <br>
+    <div class="row justify-content-center">
+        <h3 class="font-weight-light">PEDIDO MAIS CARO</h3>
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Número do pedido</th>
+                    <th>Usuário</th>
+                    <th>Data</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><?= $this->view->pedidoMCaro['numero_pedido'] ?></td>
+                    <td><?= $this->view->pedidoMCaro['usuario'] ?></td>
+                    <td><?= $this->view->pedidoMCaro['data'] ?></td>
+                    <td>R$: <?= number_format($this->view->pedidoMCaro['total'], 2, ',', '') ?></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3 class="font-weight-light">PRODUTO MAIS PEDIDO</h3>
+        <table class="table">
+            <thead class="thead-dark">
+                <th>Número do pedido</th>
+                <th>Nome do Produto</th>
+                <th>Quantidade</th>
+                <th>Preco por unidade</th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><?= $this->view->prodMPedido['idpedido'] ?></td>
+                    <td><?= $this->view->prodMPedido['nome'] ?></td>
+                    <td><?= $this->view->prodMPedido['quantidade'] ?></td>
+                    <td>R$: <?= number_format($this->view->prodMPedido['preco'], 2, ',', '') ?></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3 class="font-weight-light">10 PRODUTOS MAIS PEDIDOS</h3>
+        <table class="table">
+            <thead class="thead-dark">
+                <th>Número do Produto</th>
+                <th>Nome do Produto</th>
+                <th>N* Produto repete</th>
+                <th>Quantidade Total</th>
+            </thead>
+            <tbody>
+                <?php foreach ($this->view->top10Prod as $indice => $top10) { ?>
+                    <tr>
+                        <td><?= $top10['id_produto'] ?></td>
+                        <td><?= $top10['nome'] ?></td>
+                        <td><?= $top10['n_produto'] ?></td>
+                        <td><?= $top10['quantidade_total'] ?></td>
+                    </tr>
+                <?php } ?>
+            </tbody>
+        </table>
+    </div>
+    <br>
+    <?php if (isset($_GET['acao'])) { ?>
+        <?php if ($_GET['acao'] == 'dia') { ?>
+            <div class="row justify-content-center">
+                <h3 class="font-weight-light">RELATÓRIO DO DIA</h3>
+                <table class="table">
+                    <thead class="thead-dark">
+                        <th>Número do Pedido</th>
+                        <th>Nome do Produto</th>
+                        <th>Quantidade</th>
+                        <th>Preco</th>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($this->view->resumDia as $indice => $resumDia) { ?>
+                            <tr>
+                                <td><?= $resumDia['pedido_idpedido'] ?></td>
+                                <td><?= $resumDia['nome'] ?></td>
+                                <td><?= $resumDia['quantidade'] ?></td>
+                                <td>R$: <?= number_format($resumDia['preco_items'],2,',','') ?></td>
+                            </tr>
+                        <?php } ?>
+                    </tbody>
+                </table>
+                <table class="table">
+                    <thead class="thead-light">
+                        <tr>
+                            <th>Número do Pedido</th>
+                            <th>Total do Pedido</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($this->view->totDia as $indice => $totDia) { ?>
+                            <tr>
+                                <td><?= $totDia['idpedido'] ?></td>
+                                <td>R$: <?= number_format($totDia['precototal'],2,',','') ?></td>
+                            </tr>
+                        <?php } ?>
+                    </tbody>
+                </table>
+            </div>
+        <?php } ?>
+
+        <?php if ($_GET['acao'] == 'mes') { ?>
+            <div class="row justify-content-center">
+                <h3 class="font-weight-light">RELATÓRIO DO MÊS</h3>
+                <table class="table">
+                    <thead class="thead-dark">
+                        <th>Número do Pedido</th>
+                        <th>Nome do Produto</th>
+                        <th>Quantidade</th>
+                        <th>Preco</th>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($this->view->resumMes as $indice => $resumMes) { ?>
+                            <tr>
+                                <td><?= $resumMes['pedido_idpedido'] ?></td>
+                                <td><?= $resumMes['nome'] ?></td>
+                                <td><?= $resumMes['quantidade'] ?></td>
+                                <td>R$: <?= number_format($resumMes['preco_items'],2,',','') ?></td>
+                            </tr>
+                        <?php } ?>
+                    </tbody>
+                </table>
+                <table class="table">
+                    <thead class="thead-light">
+                        <tr>
+                            <th>Número do Pedido</th>
+                            <th>Total do Pedido</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($this->view->totMes as $indice => $totMes) { ?>
+                            <tr>
+                                <td><?= $totMes['idpedido'] ?></td>
+                                <td>R$: <?= number_format($totMes['precototal'],2,',','') ?></td>
+                            </tr>
+                        <?php } ?>
+                    </tbody>
+                </table>
+            </div>
+        <?php } ?>
+
+        <?php if ($_GET['acao'] == 'anual') { ?>
+            <div class="row justify-content-center">
+                <h3 class="font-weight-light">RELATÓRIO DO ANUAL</h3>
+                <table class="table">
+                    <thead class="thead-dark">
+                        <th>Número do Pedido</th>
+                        <th>Nome do Produto</th>
+                        <th>Quantidade</th>
+                        <th>Preco</th>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($this->view->resumAnual as $indice => $resumAnual) { ?>
+                            <tr>
+                                <td><?= $resumAnual['pedido_idpedido'] ?></td>
+                                <td><?= $resumAnual['nome'] ?></td>
+                                <td><?= $resumAnual['quantidade'] ?></td>
+                                <td>R$: <?= number_format($resumAnual['preco_items'],2,',','') ?></td>
+                            </tr>
+                        <?php } ?>
+                    </tbody>
+                </table>
+                <table class="table">
+                    <thead class="thead-light">
+                        <tr>
+                            <th>Número do Pedido</th>
+                            <th>Total do Pedido</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($this->view->totAnual as $indice => $totAnual) { ?>
+                            <tr>
+                                <td><?= $totAnual['idpedido'] ?></td>
+                                <td>R$: <?= number_format($totAnual['precototal'],2,',','') ?></td>
+                            </tr>
+                        <?php } ?>
+                    </tbody>
+                </table>
+            </div>
+        <?php } ?>
+
+    <?php } ?>
+</div>

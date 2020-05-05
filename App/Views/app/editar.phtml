@@ -1,0 +1,108 @@
+<script language="javascript" src="/js/carregaimg.js"></script>
+
+<div class="container">
+    <div class="d-flex justify-content-center">
+        <div class="row">
+            <div class="col-md">
+
+                <!-- Procurando definição -->
+                <?php if (!isset($_GET['usuario']) && !isset($_GET['produto'])) { ?>
+
+                    <h1 class="text-danger">Ops, não foi definido parametros para o editar</h1><br />
+                    <a href="/home" class="btn btn-block btn-primary"> Voltar</a>
+
+                <?php } ?>
+                <!-- fim procura get -->
+
+                <!-- ############################################ -->
+
+                <!-- editar usuario -->
+                <?php if (isset($_GET['usuario'])) { ?>
+                    <?php if ($_SESSION['tipo_usuario'] == 1) { ?>
+                        <div class="card" style="width: 22rem;">
+                            <h4 class="card-header" style="text-align:center">Editar Usuário</h4>
+                            <div class="card-body">
+                                <form class="form-group" method="post" action="editaruser">
+
+                                    <input id="id" class="form-control" style="text-align:center" type="text" name="id" value="<?= $_GET['usuario'] ?>" class="col-sm-2 col-form-label" readonly /><br />
+
+                                    <input class="form-control" style="text-align:center" type="text" name="nome" placeholder="Nome" required /><br />
+                                    <input class="form-control" style="text-align:center" type="text" name="login" placeholder="Login" required /><br />
+                                    <input class="form-control" style="text-align:center" type="password" name="senha" placeholder="Senha" required /><br />
+
+                                    <select name="tipo_usuario" class="custom-select custom-select-md mb-3">
+                                        <option value="3">Cliente</option>
+                                        <option value="2">Visualizador</option>
+                                        <option value="1">Administrador</option>
+                                    </select>
+
+                                    <button type="submit" class="btn btn-block btn-primary">Salvar</button><br />
+                                    <a href="/usuario" class="btn btn-outline-danger btn-block">Voltar</a>
+                                </form>
+                            </div>
+                        </div>
+
+                    <?php } else {
+                            header('Location: home?erro=1');
+                        } ?>
+
+                <?php } ?>
+                <!-- fim usuario -->
+
+                <!-- editar produto -->
+                <?php if (isset($_GET['produto'])) { ?>
+                    <?php if ($_SESSION['tipo_usuario'] == 1) { ?>
+                        <div class="card" style="width: 22rem;">
+                            <h4 class="card-header" style="text-align:center">Editar Produto</h4>
+                            <div class="card-body">
+                                <form class="form-group" method="post" action="/editarprod">
+                                    <input id="id" class="form-control" style="text-align:center" type="text" name="id" value="<?= $_GET['produto'] ?>" class="col-sm-2 col-form-label" readonly /><br />
+                                    <input name="nome" type="text" placeholder="Nome" class="form-control" required /> <br />
+                                    <textarea name="descricao" type="text" placeholder="Descrição" class="form-control" required></textarea> <br />
+                                    
+                                    <div class="text-center" id="renderiza_imagem">
+                                        <!-- Exibe a imagem aqui -->
+                                    </div>
+
+                                    <label>Selecione a imagem</label>
+                                    <select name="imagem" class="custom-select custom-select-md mb-3" onchange="loadImagem(this.value)">
+                                        <?php foreach ($this->view->imagem as $indice => $imagem) { ?>
+                                            <option value="/img/produto/<?= $imagem['nome'] ?>"><?= $imagem['nome'] ?></option>
+                                        <?php } ?>
+                                    </select>
+
+                                    <!-- tipo do produto -->
+                                    <label>Selecione o tipo do produto</label>
+                                    <select name="tipo" class="custom-select custom-select-md mb-3">
+                                        <option value="hamburguer">Hamburguer</option>
+                                        <option value="batata">Batata</option>
+                                        <option value="bebida">Refrigerante</option>
+                                        <option valure="combo">Combo</option>
+                                    </select>
+                                    <!-- fim tipo -->
+                                    <input name="preco" step="0.01" type="number" placeholder="Preço" class="form-control" value="<?= $this->view->produto['preco'] ?>" required /> <br />
+                                    <label>Promoção:</label>
+                                    <select name="promocao" class="custom-select custom-select-md mb-3">
+                                        <option value="0">Não</option>
+                                        <option value="1">Sim</option>
+                                    </select>
+
+                                    <button type="submit" class="btn btn-outline-success">Salvar</button>
+                                    <button type="reset" class="btn btn-outline-warning">Limpar campos</button>
+                                    <a class="btn btn-outline-danger" href="/produto">Voltar</a>
+
+                                </form>
+                            </div>
+                        </div>
+
+                    <?php } else {
+                            header('Location: home?erro=1');
+                        } ?>
+
+                <?php } ?>
+                <!-- fim produto -->
+
+            </div>
+        </div>
+    </div>
+</div>

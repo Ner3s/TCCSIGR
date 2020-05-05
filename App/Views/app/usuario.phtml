@@ -1,0 +1,64 @@
+<div class="container">
+  <div class="row">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item active"><a href="/usuario">Todos</a></li>
+        <li class="breadcrumb-item active"><a href="/usuario?filtro=1">Administrador</a></li>
+        <li class="breadcrumb-item active"><a href="/usuario?filtro=2">Visualizador</a></li>
+        <li class="breadcrumb-item active"><a href="/usuario?filtro=3">Cliente</a></li>
+      </ol>
+    </nav>
+  </div>
+  <div class="row">
+    <div class="col">
+      <h1>Usuários</h1>
+      <a href="/cadastrar" class="btn btn-outline-success my-2 my-sm-0">Cadastrar</a>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <hr>
+      <table class="table">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Nome</th>
+            <th scope="col">Login</th>
+            <th scope="col">Tipo Usuário</th>
+            <th scope="col">Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- recuperando os dados de usuario de modo dinâmico -->
+          <?php foreach ($this->view->usuario as $indice => $usuario) { ?>
+            <tr>
+              <th scope="row"><?= $usuario['idusuario'] //recupera o id do usuario
+                                ?></th>
+              <td><?= $usuario['nome'] //recupera o nome
+                    ?></td>
+              <td><?= $usuario['login'] //recupera o login
+                    ?></td>
+              <td>
+                <?php //identifica qual é o tipo de usuario e o exibe
+                  if ($usuario['tipo_usuario'] == 1) {
+                    echo 'Administrador';
+                  } else if ($usuario['tipo_usuario'] == 2) {
+                    echo 'Visualizador';
+                  } else {
+                    echo 'Cliente';
+                  }
+                  ?>
+              </td>
+              <td>
+                <a href="acaousuario?editar=<?= $usuario['idusuario'] ?>" class="btn btn-outline-warning btn-sm">Editar</a>
+                <a href="acaousuario?excluir=<?= $usuario['idusuario'] ?>" class="btn btn-outline-danger btn-sm">Excluir</a>
+              </td>
+            </tr>
+          <?php } ?>
+          <!-- fim -->
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+</div>

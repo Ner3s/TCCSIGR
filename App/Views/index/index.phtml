@@ -1,0 +1,21 @@
+<div class="text-center col-sm">
+	<form class="form-signin" method="post" action="/autenticar">
+		<img class="mb-4" src="/img/logo.png" alt="Logo" width="72" height="72">
+		<h1 class="h3 mb-3 font-weight-normal">Faça login</h1>
+		<label for="inputLogin" class="sr-only">Login</label>
+		<input type="text" style="text-align:center;" name="login" id="inputLogin" class="form-control" placeholder="Seu login" required autofocus>
+		<label for="inputPassword" class="sr-only">Senha</label>
+		<input type="password" style="text-align:center;" name="senha" id="inputPassword" class="form-control" placeholder="Senha" required>
+		<button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
+		<div>
+			<?php if($this->view->login == 'erro'){ ?>
+				<div class="row">
+					<div class="col">
+						<span class="text text-danger">*Login e ou senha inválido(s)</span>
+					</div>
+				</div>
+			<?php } ?>
+		</div>
+		<p class="mt-5 mb-3 text-muted">&copy; SIGR - 2019</p>
+	</form>
+</div>

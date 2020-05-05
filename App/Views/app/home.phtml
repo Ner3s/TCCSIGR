@@ -1,0 +1,81 @@
+<link rel="stylesheet" href="/css/home.css">
+
+<div class="container">
+    <div class="d-flex justify-content-center mt-5">
+        <div class="row">
+            <div class="col-md">
+                <!-- primeiro acesso ou sem error -->
+                <?php if (!isset($_GET['erro']) && !isset($_GET['acao'])) { ?>
+
+                    <h1> Bem vindo ao SIGR</h1>
+                    <h3>(Sistema Gerencial para Restaurantes)</h3>
+
+                <?php } ?>
+                <!-- Fim primeiro acesso *Sem Erros* -->
+
+                <!-- Erro de permissão -->
+                <?php if (isset($_GET['erro']) && $_GET['erro'] == 1) { ?>
+
+                    <h1 class="text-danger">Ops, você não possuí a permissão para esse tipo de ação!!!</h1><br />
+                    <a href="/home" class="btn btn-block btn-primary"> Voltar</a>
+
+                <?php } ?>
+
+                <?php if (isset($_GET['erro']) && $_GET['erro'] == 2) { ?>
+
+                    <h1 class="text-danger">Ops, você não finalizar o pedido dessa forma!!!</h1><br />
+                    <a href="/home" class="btn btn-block btn-primary"> Voltar</a>
+
+                <?php } ?>
+
+                <!-- Fim erro de permissão -->
+
+                <!-- Ações Usuário -->
+                <?php if (isset($_GET['acao']) && $_GET['acao'] == 'cadastraruser') { ?>
+
+                    <h1 class='text-success'>Usuário cadastrado com sucesso!!!</h1><br />
+                    <a class='btn btn-block btn-primary' href='/cadastrar'>Voltar</a>
+
+                <?php } ?>
+
+                <?php if (isset($_GET['acao']) && $_GET['acao'] == 'excluiruser') { ?>
+
+                    <h1 class='text-success'>Usuário excluído com sucesso!!!</h1>
+                    <br><a class='btn btn-block btn-primary' href='/usuario'>Voltar</a>
+
+                <?php } ?>
+
+                <?php if (isset($_GET['acao']) && $_GET['acao'] == 'editaruser') { ?>
+
+                    <h1 class='text-success'>Usuário editado com sucesso!!!</h1><br />
+                    <a class='btn btn-block btn-primary' href='/usuario'>Voltar</a>
+
+                <?php } ?>
+                <!-- Fim ações -->
+
+                <!-- Ações Produto -->
+                <?php if (isset($_GET['acao']) && $_GET['acao'] == 'cadastrarprod') { ?>
+
+                    <h1 class='text-success'>Produto cadastrado com sucesso!!!</h1><br />
+                    <a class='btn btn-block btn-primary' href='/cadastrarprod'>Voltar</a>
+
+                <?php } ?>
+
+                <?php if (isset($_GET['acao']) && $_GET['acao'] == 'excluirprod') { ?>
+
+                    <h1 class='text-success'>Produto excluído com sucesso!!!</h1>
+                    <br><a class='btn btn-block btn-primary' href='/produto'>Voltar</a>
+
+                <?php } ?>
+
+                <?php if (isset($_GET['acao']) && $_GET['acao'] == 'editarprod') { ?>
+
+                    <h1 class='text-success'>Produto editado com sucesso!!!</h1><br />
+                    <a class='btn btn-block btn-primary' href='/produto'>Voltar</a>
+
+                <?php } ?>
+                <!-- Fim ações -->
+            </div>
+        </div>
+    </div>
+</div>

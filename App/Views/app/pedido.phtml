@@ -1,0 +1,83 @@
+<meta http-equiv="refresh" content="30">
+<?php if (isset($_SESSION['tipo_usuario']) && ($_SESSION['tipo_usuario'] == 2 || $_SESSION['tipo_usuario'] == 1)) {
+    $verPed = 0; ?>
+    <div class="container">
+        <div class="row justify-content-center">
+            <?php /* ?>
+            <?php foreach($this->view->pedido as $indice => $pedido){ 
+            
+                if($pedido['idpedido'] != $verPed ){
+                    $verPed += 1;
+                    echo 'PEDIDO: '.$pedido['idpedido'].'<br/>';
+                    echo 'CLIENTE: '.$pedido['login'].'<br/>';
+                    echo 'PREÇO TOTAL: '.$pedido['precototal'].'<br/>';
+                    echo 'DATA: '.$pedido['date'].'<br/>';
+                    echo 'OBSERVAÇÃO: '.$pedido['observacao'].'<br/>'.'***VERPED: '.$verPed.' ***<br>';
+                   
+                    foreach($this->view->carrinho[$verPed] as $indice => $carrinho){
+                        echo 'Hamburguer: '.$carrinho['nome'].'<br/>';
+                        echo 'Quantidade: '.$carrinho['quantidade'].'<br/>';
+                        echo 'Preco: '.$carrinho['preco'].'<br/>';
+                        echo 'SubTotal: '.$carrinho['subtotal'].'<br/>';
+                        echo '<br><hr>';
+                    }
+                }else{
+                    $verPed+=1;
+                }
+                
+            } ?>
+        <?php */ ?>
+            <table class="table table-hover">
+
+                <?php foreach ($this->view->pedido as $indice => $pedido) {
+                        if ($pedido['idpedido'] != $verPed) {
+                            $verPed += 1;
+                            ?>
+
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">ID Pedido</th>
+                                <th scope="col">Cliente</th>
+                                <th scope="col">Data e Hora</th>
+                                <th scope="col">Observação</th>
+                                <th scope="col">Preço Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row"><?= $pedido['idpedido'] ?></th>
+                                <td><?= $pedido['login'] ?></td>
+                                <td><?= $pedido['date'] ?></td>
+                                <td><?= $pedido['observacao'] ?></td>
+                                <td><?= 'R$: ' . number_format($pedido['precototal'], 2, ',', '') ?></td>
+                            </tr>
+                        </tbody>
+
+                        <thead class="thead-light">
+                            <th scope="col">#</th>
+                            <th scope="col">Item</th>
+                            <th scope="col">Quantidade</th>
+                            <th scope="col">Preço</th>
+                            <th scope="col">SubTotal</th>
+                        </thead>
+
+                        <?php foreach ($this->view->carrinho[$verPed] as $indice => $carrinho) { ?>
+
+                            <tbody>
+                                <td>-</td>
+                                <td><?= $carrinho['nome'] ?></td>
+                                <td><?= $carrinho['quantidade'] ?></td>
+                                <td><?= 'R$: ' . number_format($carrinho['preco'], 2, ',', '') ?></td>
+                                <td><?= 'R$: ' . number_format($carrinho['subtotal'], 2, ',', '') ?></td>
+                            </tbody>
+                        <?php } ?>
+                        <?php
+                            } else {
+                                $verPed += 1;
+                            }
+                        }
+                        ?>
+            </table>
+        </div>
+    </div>
+<?php } ?>

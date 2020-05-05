@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>SIGR - Sistema gerencial para restaurante</title>
+
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+  <script src="/js/jquery-3.3.1.slim.min.js"></script>
+
+  <script src="/js/popper.min.js"></script>
+
+  <script src="/js/bootstrap.min.js"></script>
+
+  <!--
+			Incorporar CSS	
+		<link rel="stylesheet" href="/css/style.css" /> 
+		-->
+  <link href="/css/sticky-footer-navbar.css" rel="stylesheet">
+
+</head>
+
+<body>
+  <header>
+    <!-- Navbar fixa -->
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+      <a class="navbar-brand" href="\home">SIGR |</a>
+      <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+
+        <ul class="navbar-nav mr-auto">
+        <!-- Menu Adm -->
+        <?php if($_SESSION['tipo_usuario'] == 1 ){?>
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/usuario"><span data-feather="users"></span> Usuários</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/produto"><span data-feather="shopping-cart"></span> Produtos </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/pedido"><span data-feather="file"></span> Pedidos</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/relatorio"><span data-feather="bar-chart-2"></span> Relatórios</a>
+            </li>
+          
+        <?php } ?>
+        <!-- Fim menu Adm -->
+
+        <!-- Menu atendente -->
+        <?php if($_SESSION['tipo_usuario'] == 2){ ?>
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/pedido"><span data-feather="file"></span> Pedidos</a>
+            </li>
+          
+        <?php } ?>
+        <!-- Fim menu atendente -->
+
+        <?php if($_SESSION['tipo_usuario'] == 3){ ?>
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/produto"><span data-feather="coffee"></span> Produtos </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/carrinho"><span data-feather="shopping-cart"></span> Carrinho</a>
+            </li>
+          
+        <?php } ?>
+        </ul>
+
+        <?php if($_SESSION['tipo_usuario'] != 3){ ?>
+          <a class="btn btn-outline-danger my-2 my-sm-0" href="/sair">Sair</a>
+        <?php } ?>
+      </div>
+    </nav>
+  </header>
+  <div class="reprom"></div>
+    <?= $this->content(); ?>
+</body>
+
+</html>
+
+<!-- Principal JavaScript do Bootstrap
+    ================================================== -->
+<!-- Foi colocado no final para a página carregar mais rápido -->
+<script src="/js/jquery-3.3.1.slim.min.js" ></script>
+<script>
+  window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')
+</script>
+<script src="/js/popper.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/feather.min.js"></script>
+<script>
+  feather.replace()
+</script>

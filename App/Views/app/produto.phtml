@@ -1,0 +1,122 @@
+<!-- Menu Administrador -->
+<?php if (isset($_SESSION['tipo_usuario']) && $_SESSION['tipo_usuario'] == 1) { ?>
+    <div class="container">
+        <div class="row">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item active"><a href="/produto">Todos</a></li>
+                    <li class="breadcrumb-item active"><a href="/produto?filtro=hamburguer">Hamburguer</a></li>
+                    <li class="breadcrumb-item active"><a href="/produto?filtro=batata">Batata</a></li>
+                    <li class="breadcrumb-item active"><a href="/produto?filtro=bebida">Bebida</a></li>
+                    <li class="breadcrumb-item active"><a href="/produto?filtro=combo">Combo</a></li>
+                </ol>
+            </nav>
+        </div>
+        <div class="row">
+            <div class="col">
+                <h1>Produtos</h1>
+                <a href="/cadastrarprod" class="btn btn-outline-success my-2 my-sm-0">Cadastrar</a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <hr>
+                <table class="table">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Id</th>
+                            <th scope="col">Nome</th>
+                            <th scope="col">Imagem</th>
+                            <th scope="col">Descricao</th>
+                            <th scope="col">Preço</th>
+                            <th scope="col">Promocão</th>
+                            <th scope="col">Tipo</th>
+                            <th scope="col">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- recuperando os dados de produto de modo dinâmico -->
+                        <?php foreach ($this->view->produto as $indice => $produto) { ?>
+                            <tr>
+                                <th scope="row"><?= $produto['idproduto'] ?></th> <!-- recupera o id -->
+                                <td><?= $produto['nome'] ?></td> <!-- recupera o nome -->
+                                <td><?= $produto['imagem'] ?></td> <!-- recupera a imagem -->
+                                <td><?= $produto['descricao'] ?></td> <!-- recupera a descrição -->
+                                <td><?= $produto['preco'] ?></td><!-- recupera o preco -->
+                                <td>
+                                    <?php if ($produto['promocao'] == 1) {
+                                                echo 'Sim';
+                                            } elseif ($produto['promocao'] == 0) {
+                                                echo 'Não';
+                                            }
+
+                                            ?>
+                                </td> <!-- recupera se está em promoção -->
+                                <td><?= $produto['tipo'] ?></td><!-- recupera o tipo -->
+                                <td>
+                                    <a href="acaoproduto?editar=<?= $produto['idproduto'] ?>" class="btn btn-outline-warning btn-sm">Editar</a>
+                                    <a href="acaoproduto?excluir=<?= $produto['idproduto'] ?>" class="btn btn-outline-danger btn-sm">Excluir</a>
+                                </td>
+                            </tr>
+                        <?php } ?>
+                        <!-- fim -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+<?php } ?>
+
+<!-- Menu usuario -->
+<?php if (isset($_SESSION['tipo_usuario']) && $_SESSION['tipo_usuario'] == 3) { ?>
+
+    <div class="container">
+
+        <div class="row">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item active"><a href="/produto">Todos</a></li>
+                    <li class="breadcrumb-item active"><a href="/produto?filtro=hamburguer">Hamburguer</a></li>
+                    <li class="breadcrumb-item active"><a href="/produto?filtro=batata">Batata</a></li>
+                    <li class="breadcrumb-item active"><a href="/produto?filtro=bebida">Bebidas</a></li>
+                    <li class="breadcrumb-item active"><a href="/produto?filtro=combo">Combos</a></li>
+                </ol>
+            </nav>
+        </div>
+
+        <div class="row justify-content-center">
+
+            <?php foreach ($this->view->produto as $indice => $produto) { ?>
+                <div class="col-md-4" style="margin-top:1rem; margin-bottom:1rem;">
+                    <div class="card" style="width: 19rem;">
+                        <img class="card-img-top" src="<?= $produto['imagem'] ?>" alt="Imagem">
+                        <div class="card-body">
+                            <h4 class="card-title"><?= $produto['nome'] ?> <span class="badge badge-dark"><?php echo $produto['promocao'] == 1 ? 'Promoção' : ''; ?></span></h4>
+                            <p class="card-text"><?= $produto['descricao'] ?></p>
+                            <h6 class="card-text">R$ <?= number_format($produto['preco'], 2, ',', '') ?></h6>
+                        </div>
+                        <div class="card-footer">
+
+                            <form action="/carrinho?acao=add" method="post">
+                                <input class="form-control" type="hidden" name="idproduto" value="<?= $produto['idproduto'] ?>" />
+                                
+                                <div class="row">
+                                    <div class="col-5">
+                                        <input id="quantidade" style="text-align:center;" name="quantidade" placeholder="Qtd" class="form-control" type="number" min="1" max="15" required>
+                                    </div>
+                                
+                                    <div class="col-1">
+                                        <input class="btn btn-primary" type="submit" value="Comprar" />
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            <?php } ?>
+
+        </div>
+    </div>
+
+<?php } ?>

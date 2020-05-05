@@ -1,0 +1,72 @@
+<?php $valorTotal = null; ?>
+<div class="container">
+    <?php if (count($_SESSION['carrinho']) == 0) { ?>
+        <div class="jumbotron">
+            <h1 class="display-4">Olá, seu carrinho está vazio :( </h1>
+            <p class="lead">Volte para aba de produtos para continuar com as compras.</p>
+            <hr class="my-4">
+            <a class="btn btn-primary btn-lg" href="/produto" role="button">Voltar para produtos</a>
+        </div>
+    <?php } else { ?>
+
+        <div class="row">
+            <h2>Seu carrinho de <span class="text-primary">COMPRAS</span></h2>
+            <table class="table">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">Produtos</th>
+                        <th scope="col">Valor unitário</th>
+                        <th scope="col">Quantidade</th>
+                        <th scope="col">Sub total</th>
+                        <th scope="col">Excluir</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($_SESSION['carrinho'] as $indice => $produto){ ?>
+                        <tr>
+                            <th scope="row"><?= $produto['nome'] ?></th>
+                            <td><?= number_format($produto['preco'],2,',','') ?></td>
+                            
+                            <form method="post" action="carrinho?acao=quantidade">
+                                <input type="hidden" value="<?= $produto['idproduto']?>" name="idproduto"/>
+                                <td> <input type="number" class="form-control col-md-4" value="<?=$produto['quantidade']?>" name="quantidade" min="1" max="50"/> 
+                                <input type="submit" value="Alterar" class="btn btn-primary" /> </td>
+                            </form>
+
+                            <td><?= number_format($produto['subtotal'],2,',','')?></td>
+                            <td><a class="btn btn-danger" href="/carrinho?acao=remover&id=<?= $indice ?>">X</a></td>
+                        </tr>
+
+                        <?php 
+                            $valorTotal += $produto['subtotal']; //pega os valores dos produtos
+                        ?>
+                    <?php } ?>
+                </tbody>
+            </table>
+
+            <?php $_SESSION['totalcarrinho'] = $valorTotal; ?>
+
+            <table class="table">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">Valor total: </th>
+                        <th scope="col">R$ <?= number_format($_SESSION['totalcarrinho'],2,',','')?> </th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+        <div class="row">
+            <div class="col-md-5">
+                <form class="form" method="post" action="/carrinho?acao=observacao">
+                    <textarea name="observacao" class="form-control" placeholder="Observação, exemplo: sem ketchup."><?php if(isset($_SESSION['observacao'])){
+                        echo $_SESSION['observacao'];
+                    }?></textarea>
+                    <input type="submit" class="btn btn-info" value="Adicionar observação" />
+                </form>
+            </div>
+            <div class="col-md-3"><a class="btn btn-primary" href="/produto"> Continuar Comprando </a></div>
+            <div class="col-md-2"><a class="btn btn-danger" href="/carrinho?acao=removerall"> Limpar Carrinho </a></div>
+            <div class="col-md-2"><a class="btn btn-success" href="/carrinho?acao=finalizar"> Finalizar Pedido </a></div>
+        </div>
+    <?php } ?>
+</div>
